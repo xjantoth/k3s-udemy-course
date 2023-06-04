@@ -20,6 +20,8 @@ Make sure to delete all your AWS resources once you are not using it in order to
 - k3scourse@gmail.com (this email is taken by me)
 - keep your passwords to AWS safe e.g. keepass
 - setup MFA authentication (recommended)
+- 3 AWS regions are supported out of a box for AWS Free tier account
+- make sure that datetime is accurate at your workstation
 
 ### Setting up AWS Free Tier account
 
@@ -222,4 +224,20 @@ spec:
 EOF
 
 
+```
+
+Test that security group allows only port specified via telnet or netcat(nc) commnad
+
+```bash
+# run this command at EC3 instance in AWS
+nc -l -p 10333
+
+# run this commands locally
+telnet 1.2.3.4 10333
+telnet 1.2.3.4 80
+
+nc -z -v -w2 1.2.3.4 10333
+nc -z -v -w2 1.2.3.4 80
+
+awk '/32 host/ { print f } {f=$2}' <<< "$(</proc/net/fib_trie)"
 ```
