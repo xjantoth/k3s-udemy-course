@@ -107,6 +107,10 @@ Generate "Access keys"
 Store credentials.
 ![AWS Free Tier Account](img/tier-27.png) 
 
+![AWS Free Tier Account](img/tier-28.png) 
+![AWS Free Tier Account](img/tier-29.png) 
+![AWS Free Tier Account](img/tier-30.png) 
+
 
 
 ### Provision EC2 instance in AWS
