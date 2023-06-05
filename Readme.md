@@ -20,7 +20,7 @@ Make sure to delete all your AWS resources once you are not using it in order to
 - k3scourse@gmail.com (this email is taken by me)
 - keep your passwords to AWS safe e.g. keepass
 - setup MFA authentication (recommended)
-- 3 AWS regions are supported out of a box for AWS Free tier account
+- 3 AWS regions are supported out of a box for AWS Free tier account (Virginia, Oregon, Ohio)
 - make sure that datetime is accurate at your workstation
 
 ### Setting up AWS Free Tier account
@@ -162,7 +162,113 @@ aws sts get-caller-identity --profile k3s-course
 Since MFA is enabled we will generate a temporary credentials that Terraform will use when executing `terrafrom apply`.
 
 ```bash
-TOKEN_CODE="368139"
+# IAM -> choose your IAM user -> Permissions ->   Add Permissions -> Create inline policy -> Json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "MustBeSignedInWithMFA",
+            "Effect": "Deny",
+            "NotAction": [
+                "iam:CreateVirtualMFADevice",
+                "iam:DeleteVirtualMFADevice",
+                "iam:ListVirtualMFADevices",
+                "iam:EnableMFADevice",
+                "iam:ResyncMFADevice",
+                "iam:ListAccountAliases",
+                "iam:ListUsers",
+                "iam:ListSSHPublicKeys",
+                "iam:ListAccessKeys",
+                "iam:ListServiceSpecificCredentials",
+                "iam:ListMFADevices",
+                "iam:GetAccountSummary",
+                "sts:GetSessionToken"
+            ],
+            "Resource": "*",
+            "Condition": {
+                "BoolIfExists": {
+                    "aws:MultiFactorAuthPresent": "false"
+                }
+            }
+        }
+    ]
+}
+# - - - - - - - - - - - - - - -
+
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AllowEC2InstanceCreation",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:RunInstances",
+                "ec2:DescribeInstances",
+                "ec2:TerminateInstances",
+                "ec2:CreateTags",
+                "ec2:DescribeInstanceTypes",
+                "ec2:DescribeLaunchTemplates",
+                "ec2:DescribeTags",
+                "ec2:DescribeInstanceAttribute",
+                "ec2:DescribeVolumes",
+                "ec2:DescribeInstanceCreditSpecifications"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "AllowKeyPairManagement",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:CreateKeyPair",
+                "ec2:DescribeKeyPairs",
+                "ec2:DeleteKeyPair",
+                "ec2:ImportKeyPair"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "AllowSecurityGroupManagement",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:CreateSecurityGroup",
+                "ec2:DescribeSecurityGroups",
+                "ec2:DeleteSecurityGroup",
+                "ec2:RevokeSecurityGroupEgress",
+                "ec2:DeleteNetworkInterface",
+                "ec2:DescribeNetworkInterfaces",
+                "ec2:AuthorizeSecurityGroupIngress",
+                "ec2:AuthorizeSecurityGroupEgress"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "AllowVPCAndAvailabilityZoneManagement",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DescribeAvailabilityZones",
+                "ec2:DescribeVpcAttribute",
+                "ec2:DescribeSubnets",
+                "ec2:DescribeRouteTables",
+                "ec2:DescribeInternetGateways",
+                "ec2:DescribeVpcAttribute",
+                "ec2:DescribeVpcClassicLink",
+                "ec2:DescribeVpcClassicLinkDnsSupport",
+                "ec2:DescribeVpcEndpoints",
+                "ec2:DescribeVpcEndpointConnectionNotifications",
+                "ec2:DescribeVpcEndpointConnections",
+                "ec2:DescribeVpcEndpointServiceConfigurations",
+                "ec2:DescribeVpcEndpointServicePermissions",
+                "ec2:DescribeVpcEndpointServices",
+                "ec2:DescribeVpcPeeringConnections",
+                "ec2:DescribeVpcs"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+
+TOKEN_CODE="015042"
 token_output=$(aws sts get-session-token \
 --serial-number arn:aws:iam::363711084474:mfa/k3s-course-tf \
 --token-code ${TOKEN_CODE} \
