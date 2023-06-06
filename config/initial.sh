@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# sudo cat /var/lib/cloud/instance/scripts/part-001
+# cat /var/log/cloud-init-output.log
+
 set -ex
 
 echo "Hello User Data from Terraform" > /opt/user_data.txt

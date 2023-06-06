@@ -26,6 +26,9 @@ jobs:
         with:
           terraform_version: 1.4.6
 
+      - name: Terraform Init
+        run: cd terraform; pwd; ls -al; terraform init
+
       - name: Get Approval
         id: approval
         run: |
