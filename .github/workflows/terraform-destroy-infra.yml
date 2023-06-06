@@ -33,4 +33,4 @@ jobs:
           echo "::set-output name=approved::true" # Set to 'false' if rejected
       - name: Terraform Apply
         if: ${{ steps.approval.outputs.approved == 'true' }}
-        run: terraform destroy -auto-approve
+        run: cd terraform; ls -al; pwd; terraform destroy -auto-approve

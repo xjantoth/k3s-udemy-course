@@ -39,4 +39,4 @@ jobs:
           echo "::set-output name=approved::true" # Set to 'false' if rejected
       - name: Terraform Apply
         if: ${{ steps.approval.outputs.approved == 'true' }}
-        run: terraform apply tfplan.out
+        run: cd terraform; pwd; ls -al; terraform apply tfplan.out
