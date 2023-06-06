@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  terraform-apply:
+  terraform-destroy:
     runs-on: ubuntu-latest
     env:
       ENVIRONMENT_NAME: dev
@@ -34,6 +34,6 @@ jobs:
         run: |
           echo "Approve or reject the Terraform changes."
           echo "::set-output name=approved::true" # Set to 'false' if rejected
-      - name: Terraform Apply
+      - name: Terraform Destroy
         if: ${{ steps.approval.outputs.approved == 'true' }}
         run: cd terraform; ls -al; pwd; terraform destroy -auto-approve
