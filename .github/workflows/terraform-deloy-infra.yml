@@ -30,7 +30,7 @@ jobs:
         run: cd terraform; pwd; ls -al; terraform init
 
       - name: Terraform Plan
-        run: cd terraform; pwd; ls -al; terraform plan -out=tfplan
+        run: cd terraform; pwd; ls -al; terraform plan -out=tfplan.out
 
       - name: Get Approval
         id: approval
@@ -39,4 +39,4 @@ jobs:
           echo "::set-output name=approved::true" # Set to 'false' if rejected
       - name: Terraform Apply
         if: ${{ steps.approval.outputs.approved == 'true' }}
-        run: terraform apply tfplan -auto-approve
+        run: terraform apply tfplan.out
