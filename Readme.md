@@ -195,7 +195,7 @@ Since MFA is enabled we will generate a temporary credentials that Terraform wil
 }
 # - - - - - - - - - - - - - - -
 
-
+# k3s-course-no-mfa-restrictive
 {
     "Version": "2012-10-17",
     "Statement": [
@@ -264,11 +264,31 @@ Since MFA is enabled we will generate a temporary credentials that Terraform wil
                 "ec2:DescribeVpcs"
             ],
             "Resource": "*"
+        },
+        {
+            "Sid": "AllowBucketListing",
+            "Effect": "Allow",
+            "Action": [
+                "s3:ListBucket",
+                "s3:GetBucketLocation"
+            ],
+            "Resource": "arn:aws:s3:::k3scourse"
+        },
+        {
+            "Sid": "AllowObjectOperations",
+            "Effect": "Allow",
+            "Action": [
+                "s3:PutObject",
+                "s3:GetObject",
+                "s3:DeleteObject",
+                "s3:ListBucketMultipartUploads"
+            ],
+            "Resource": "arn:aws:s3:::k3scourse/*"
         }
     ]
 }
 
-TOKEN_CODE="015042"
+TOKEN_CODE="576353"
 token_output=$(aws sts get-session-token \
 --serial-number arn:aws:iam::363711084474:mfa/k3s-course-tf \
 --token-code ${TOKEN_CODE} \
@@ -279,6 +299,7 @@ export AWS_ACCESS_KEY_ID=$(echo $token_output | jq -r '.Credentials.AccessKeyId'
 export AWS_SECRET_ACCESS_KEY=$(echo $token_output | jq -r '.Credentials.SecretAccessKey')
 export AWS_SESSION_TOKEN=$(echo $token_output | jq -r '.Credentials.SessionToken')
 
+export AWS_DEFAULT_PROFILE
 # verify that 
 env | grep AWS
 
