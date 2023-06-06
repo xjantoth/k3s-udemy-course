@@ -6,7 +6,9 @@ on:
 jobs:
   terraform-apply:
     runs-on: ubuntu-latest
-
+    env:
+    ENVIRONMENT_NAME: dev
+  
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
