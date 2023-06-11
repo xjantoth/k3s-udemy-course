@@ -5,7 +5,7 @@
 
 set -ex
 
-echo "Hello User Data from Terraform" > /opt/user_data.txt
+echo "K3S Mster: Hello User Data from Terraform" > /opt/user_data.txt
 
 
 curl -sfL https://get.k3s.io | sh -s - --write-kubeconfig-mode 644 --tls-san $(curl ifconfig.me)
