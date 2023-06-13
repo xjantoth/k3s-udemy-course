@@ -1,6 +1,7 @@
 temp
 # Local .terraform directories
 **/.terraform/*
+tf-root/.terraform/*
 
 # .tfstate files
 *.tfstate

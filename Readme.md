@@ -238,7 +238,11 @@ Since MFA is enabled we will generate a temporary credentials that Terraform wil
                 "ec2:DeleteNetworkInterface",
                 "ec2:DescribeNetworkInterfaces",
                 "ec2:AuthorizeSecurityGroupIngress",
-                "ec2:AuthorizeSecurityGroupEgress"
+                "ec2:AuthorizeSecurityGroupEgress",
+                "ec2:RevokeSecurityGroupIngress",
+                "ec2:StopInstances",
+                "ec2:ModifyInstanceAttribute",
+                "ec2:StartInstances"
             ],
             "Resource": "*"
         },
@@ -287,6 +291,7 @@ Since MFA is enabled we will generate a temporary credentials that Terraform wil
         }
     ]
 }
+
 
 TOKEN_CODE="576353"
 token_output=$(aws sts get-session-token \
@@ -342,6 +347,7 @@ kind: Ingress
 metadata:
   name: k3scourse
 spec:
+  ingressClassName: nginx
   rules:
     - http:
         paths:
@@ -354,6 +360,31 @@ spec:
                   number: 8080
 EOF
 
+
+helm repo add nginx https://kubernetes.github.io/ingress-nginx
+helm repo update nginx
+helm install nginx nginx/ingress-nginx --set controller.service.nodePorts.http=30111
+
+kubectl apply -f - <<EOF
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minimal-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - path: /app(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: k3scourse
+            port:
+              number: 8080
+EOF
 
 ```
 
