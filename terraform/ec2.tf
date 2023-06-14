@@ -1,6 +1,92 @@
+  # "ssm:PutParameter",
+  #               "iam:CreateRole",
+  #               "iam:TagRole",
+  #               "ssm:AddTagsToResource",
+  #               "ssm:GetParameter",
+  #               "ssm:GetParameters",
+  #               "iam:GetRole",
+  #               "iam:ListRolePolicies",
+  #               "iam:ListAttachedRolePolicies",
+  #               "iam:ListInstanceProfilesForRole",
+  #               "ssm:DescribeParameters",
+  #               "iam:DeleteRole",
+  #               "iam:CreateInstanceProfile",
+  #               "iam:TagInstanceProfile",
+  #               "iam:ListInstanceProfiles",
+  #               "iam:GetInstanceProfile",
+  #               "ssm:ListTagsForResource",
+  #               "iam:RemoveRoleFromInstanceProfile",
+  #               "iam:DeleteInstanceProfile",
+  #               "iam:AddRoleToInstanceProfile",
+  #               "iam:PassRole",
+  #               "iam:PutRolePolicy",
+  #               "iam:GetRolePolicy",
+  #               "iam:ListRolePolicies",
+  #               "iam:DeleteRolePolicy",
+  #               "ssm:DeleteParameter"
+
+
 resource "aws_key_pair" "this" {
   key_name   = var.prefix
   public_key = file(var.ssh_public_key_path)
+}
+
+resource "aws_ssm_parameter" "k3s_token" {
+    name = "k3s_token"
+    value = "empty"
+    type = "String"
+
+    lifecycle {
+      ignore_changes = [value]
+    }
+}
+
+resource "aws_iam_role" "put_parameters" {
+    name = "put_parameters"
+    description = "Role to permit ec2 to put parameters from Parameter Store"
+    assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy" "put_parameters" {
+    name = "get_parameters"
+    role = aws_iam_role.put_parameters.name
+    policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ssm:GetParameters",
+                "ssm:PutParameters"
+            ],
+            "Resource": [
+                "${aws_ssm_parameter.k3s_token.arn}"
+            ]
+        }
+        
+    ]
+}
+EOF
+}
+
+resource "aws_iam_instance_profile" "k3s_master" {
+    name = "k3s_master"
+    role = aws_iam_role.put_parameters.name
 }
 
 resource "aws_instance" "master" {
@@ -17,7 +103,7 @@ resource "aws_instance" "master" {
 
   # placement_group = aws_placement_group.partition.id
 
-  # iam_instance_profile = aws_iam_instance_profile.instance_profile.name
+  iam_instance_profile = aws_iam_instance_profile.k3s_master.name
 
 }
 
@@ -42,6 +128,53 @@ data "template_file" "node" {
   }
 }
 
+# K3S Node section
+resource "aws_iam_role" "get_parameters" {
+    name = "get_parameters"
+    description = "Role to permit ec2 to get parameters from Parameter Store"
+    assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy" "get_parameters" {
+    name = "get_parameters"
+    role = aws_iam_role.get_parameters.name
+    policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ssm:GetParameters"
+            ],
+            "Resource": [
+                "${aws_ssm_parameter.k3s_token.arn}"
+            ]
+        }
+    ]
+}
+EOF
+}
+
+resource "aws_iam_instance_profile" "k3s_node" {
+    name = "get_parameters"
+    role = aws_iam_role.get_parameters.name
+}
+
 resource "aws_instance" "node" {
   ami           = var.ami_image
   instance_type = var.instance_type
@@ -56,7 +189,7 @@ resource "aws_instance" "node" {
 
   # placement_group = aws_placement_group.partition.id
 
-  # iam_instance_profile = aws_iam_instance_profile.instance_profile.name
+  iam_instance_profile = aws_iam_instance_profile.k3s_node.name
 
 }
 
