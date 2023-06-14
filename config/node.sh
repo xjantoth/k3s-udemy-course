@@ -14,15 +14,15 @@ apt install awscli -y
 # TODO
 # 
 c=0
-max=3
+max=60
 
-until [[ "$(curl -k -sSL -I https://${MASTER_PRIVATE_IPV4}:6443/healthz)" == *"HTTP/2 401"* ]];  do
+until [[ "$(curl -k -sL -I https://${MASTER_PRIVATE_IPV4}:6443/healthz | head -n1)" == *"HTTP/2 401"* ]];  do
   echo "Waiting for Kubernetes API to be available..."
   ((c++))
   if [[ $c -ge $max ]]; then
     exit 1
   fi
-  sleep 2
+  sleep 5
 done
 
 export K3S_TOKEN_SSM=$(aws ssm get-parameters --names k3s_token --query 'Parameters[0].Value' --output text --region ${REGION})
