@@ -4,7 +4,7 @@ provider "aws" {
       Environment = "Course"
       Owner       = "Terraform"
       Project     = "Learning"
-      Name        = "k3s-course"
+      Name        = "k3s-course-tf-root"
     }
   }
 }
