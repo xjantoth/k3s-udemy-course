@@ -1,5 +1,25 @@
-resource "aws_iam_user" "this" {
-  name = "k3s-restrictive-no-mfa"
+variable "k3s_restrictive_no_mfa" {
+  type    = string
+  default = "k3s-restrictive-no-mfa"
+}
+
+variable "k3s_admin" {
+  type    = string
+  default = "k3s-admin"
+}
+
+variable "s3_bucket_name" {
+  type    = string
+  default = "k3scourse"
+}
+
+# ---------------------------------------------------------------------------------------
+resource "aws_iam_user" "k3s_restrictive" {
+  name = var.k3s_restrictive_no_mfa
+}
+
+resource "aws_iam_user" "k3s_ui_cli_admin_mfa" {
+  name = var.k3s_admin
 }
 
 resource "aws_iam_policy" "restrictive" {
@@ -9,79 +29,24 @@ resource "aws_iam_policy" "restrictive" {
 }
 
 resource "aws_iam_user_policy_attachment" "example_attachment" {
-  user       = aws_iam_user.this.name
+  user       = aws_iam_user.k3s_restrictive.name
   policy_arn = aws_iam_policy.restrictive.arn
 }
 
-data "aws_iam_policy_document" "restrictive" {
-  statement {
-    sid       = "AllowEC2Operations"
-    effect    = "Allow"
-    resources = ["*"]
-    actions   = [
-      "ec2:RunInstances",
-      "ec2:DescribeInstances",
-      "ec2:TerminateInstances",
-      "ec2:CreateTags",
-      "ec2:DescribeInstanceTypes",
-      "ec2:DescribeLaunchTemplates",
-      "ec2:DescribeTags",
-      "ec2:DescribeInstanceAttribute",
-      "ec2:DescribeVolumes",
-      "ec2:DescribeInstanceCreditSpecifications",
-      "ec2:CreateKeyPair",
-      "ec2:DescribeKeyPairs",
-      "ec2:DeleteKeyPair",
-      "ec2:ImportKeyPair",
-      "ec2:CreateSecurityGroup",
-      "ec2:DescribeSecurityGroups",
-      "ec2:DeleteSecurityGroup",
-      "ec2:RevokeSecurityGroupEgress",
-      "ec2:DeleteNetworkInterface",
-      "ec2:DescribeNetworkInterfaces",
-      "ec2:AuthorizeSecurityGroupIngress",
-      "ec2:AuthorizeSecurityGroupEgress",
-      "ec2:RevokeSecurityGroupIngress",
-      "ec2:StopInstances",
-      "ec2:ModifyInstanceAttribute",
-      "ec2:StartInstances",
-      "ec2:DescribeAvailabilityZones",
-      "ec2:DescribeVpcAttribute",
-      "ec2:DescribeSubnets",
-      "ec2:DescribeRouteTables",
-      "ec2:DescribeInternetGateways",
-      "ec2:DescribeVpcClassicLink",
-      "ec2:DescribeVpcClassicLinkDnsSupport",
-      "ec2:DescribeVpcEndpoints",
-      "ec2:DescribeVpcEndpointConnectionNotifications",
-      "ec2:DescribeVpcEndpointConnections",
-      "ec2:DescribeVpcEndpointServiceConfigurations",
-      "ec2:DescribeVpcEndpointServicePermissions",
-      "ec2:DescribeVpcEndpointServices",
-      "ec2:DescribeVpcPeeringConnections",
-      "ec2:DescribeVpcs",
-    ]
-  }
 
-  statement {
-    sid       = "AllowBucketListing"
-    effect    = "Allow"
-    resources = ["arn:aws:s3:::k3scourse"]
-    actions   = [
-      "s3:ListBucket",
-      "s3:GetBucketLocation",
-    ]
-  }
-
-  statement {
-    sid       = "AllowObjectOperations"
-    effect    = "Allow"
-    resources = ["arn:aws:s3:::k3scourse/*"]
-    actions   = [
-      "s3:PutObject",
-      "s3:GetObject",
-      "s3:DeleteObject",
-      "s3:ListBucketMultipartUploads",
-    ]
-  }
+resource "aws_iam_policy" "mfa" {
+  name        = "k3s-admin-ui-cli-with-mfa"
+  description = "Custom TF policy that enforces MFA at cli level"
+  policy      = data.aws_iam_policy_document.mfa.json
 }
+
+resource "aws_iam_user_policy_attachment" "k3s_admin_ui_cli_with_mfa" {
+  user       = aws_iam_user.k3s_ui_cli_admin_mfa.name
+  policy_arn = aws_iam_policy.mfa.arn
+}
+
+resource "aws_iam_user_policy_attachment" "admin_attachment" {
+  user       = aws_iam_user.k3s_ui_cli_admin_mfa.name
+  policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
+}
+
