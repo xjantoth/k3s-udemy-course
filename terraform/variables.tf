@@ -27,3 +27,8 @@ variable "allowed_ports" {
   description = "Allowed TCP ports e.g. [...]"
   type        = list(number)
 }
+
+variable "region" {
+  description = "AWS Region e.g. us-east-1"
+  type        = string
+}

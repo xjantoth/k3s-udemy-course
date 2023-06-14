@@ -6,3 +6,4 @@ ssh_public_key_path   = "k3s-course.pub"
 prefix                = "k3s-course"
 user_data_script_path = "../config/inital.sh"
 allowed_ports         = [22, 80, 6443, 443, 30111]
+region                = "us-east-1"

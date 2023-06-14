@@ -4,47 +4,89 @@ data "aws_iam_policy_document" "restrictive" {
     effect    = "Allow"
     resources = ["*"]
     actions   = [
-      "ec2:RunInstances",
-      "ec2:DescribeInstances",
-      "ec2:TerminateInstances",
-      "ec2:CreateTags",
-      "ec2:DescribeInstanceTypes",
-      "ec2:DescribeLaunchTemplates",
-      "ec2:DescribeTags",
-      "ec2:DescribeInstanceAttribute",
-      "ec2:DescribeVolumes",
-      "ec2:DescribeInstanceCreditSpecifications",
-      "ec2:CreateKeyPair",
-      "ec2:DescribeKeyPairs",
-      "ec2:DeleteKeyPair",
-      "ec2:ImportKeyPair",
-      "ec2:CreateSecurityGroup",
-      "ec2:DescribeSecurityGroups",
-      "ec2:DeleteSecurityGroup",
-      "ec2:RevokeSecurityGroupEgress",
-      "ec2:DeleteNetworkInterface",
-      "ec2:DescribeNetworkInterfaces",
-      "ec2:AuthorizeSecurityGroupIngress",
       "ec2:AuthorizeSecurityGroupEgress",
-      "ec2:RevokeSecurityGroupIngress",
-      "ec2:StopInstances",
-      "ec2:ModifyInstanceAttribute",
-      "ec2:StartInstances",
+      "ec2:AuthorizeSecurityGroupIngress",
+      "ec2:CreateKeyPair",
+      "ec2:CreateSecurityGroup",
+      "ec2:CreateTags",
+      "ec2:DeleteKeyPair",
+      "ec2:DeleteNetworkInterface",
+      "ec2:DeleteSecurityGroup",
       "ec2:DescribeAvailabilityZones",
-      "ec2:DescribeVpcAttribute",
-      "ec2:DescribeSubnets",
-      "ec2:DescribeRouteTables",
+      "ec2:DescribeInstanceAttribute",
+      "ec2:DescribeInstanceCreditSpecifications",
+      "ec2:DescribeInstanceTypes",
+      "ec2:DescribeInstances",
       "ec2:DescribeInternetGateways",
+      "ec2:DescribeKeyPairs",
+      "ec2:DescribeLaunchTemplates",
+      "ec2:DescribeNetworkInterfaces",
+      "ec2:DescribeRouteTables",
+      "ec2:DescribeSecurityGroups",
+      "ec2:DescribeSubnets",
+      "ec2:DescribeTags",
+      "ec2:DescribeVolumes",
+      "ec2:DescribeVpcAttribute",
       "ec2:DescribeVpcClassicLink",
       "ec2:DescribeVpcClassicLinkDnsSupport",
-      "ec2:DescribeVpcEndpoints",
       "ec2:DescribeVpcEndpointConnectionNotifications",
       "ec2:DescribeVpcEndpointConnections",
       "ec2:DescribeVpcEndpointServiceConfigurations",
       "ec2:DescribeVpcEndpointServicePermissions",
       "ec2:DescribeVpcEndpointServices",
+      "ec2:DescribeVpcEndpoints",
       "ec2:DescribeVpcPeeringConnections",
       "ec2:DescribeVpcs",
+      "ec2:ImportKeyPair",
+      "ec2:ModifyInstanceAttribute",
+      "ec2:RevokeSecurityGroupEgress",
+      "ec2:RevokeSecurityGroupIngress",
+      "ec2:RunInstances",
+      "ec2:StartInstances",
+      "ec2:StopInstances",
+      "ec2:TerminateInstances"
+    ]
+  }
+
+  statement {
+    sid       = "AllowIAM"
+    effect    = "Allow"
+    resources = ["*"]
+    actions   = [
+      "iam:AddRoleToInstanceProfile",
+      "iam:CreateInstanceProfile",
+      "iam:CreateRole",
+      "iam:DeleteInstanceProfile",
+      "iam:DeleteRole",
+      "iam:DeleteRolePolicy",
+      "iam:GetInstanceProfile",
+      "iam:GetRole",
+      "iam:GetRolePolicy",
+      "iam:ListAttachedRolePolicies",
+      "iam:ListInstanceProfiles",
+      "iam:ListInstanceProfilesForRole",
+      "iam:ListRolePolicies",
+      "iam:ListRolePolicies",
+      "iam:PassRole",
+      "iam:PutRolePolicy",
+      "iam:RemoveRoleFromInstanceProfile",
+      "iam:TagInstanceProfile",
+      "iam:TagRole"
+    ]
+  }
+  statement {
+    sid       = "AllowSSM"
+    effect    = "Allow"
+    resources = ["*"]
+    actions   = [
+      "ssm:AddTagsToResource",
+      "ssm:DeleteParameter",
+      "ssm:DescribeParameters",
+      "ssm:GetParameter",
+      "ssm:GetParameters",
+      "ssm:ListTagsForResource",
+      "ssm:PutParameter"
+
     ]
   }
 

@@ -1,31 +1,3 @@
-  # "ssm:PutParameter",
-  #               "iam:CreateRole",
-  #               "iam:TagRole",
-  #               "ssm:AddTagsToResource",
-  #               "ssm:GetParameter",
-  #               "ssm:GetParameters",
-  #               "iam:GetRole",
-  #               "iam:ListRolePolicies",
-  #               "iam:ListAttachedRolePolicies",
-  #               "iam:ListInstanceProfilesForRole",
-  #               "ssm:DescribeParameters",
-  #               "iam:DeleteRole",
-  #               "iam:CreateInstanceProfile",
-  #               "iam:TagInstanceProfile",
-  #               "iam:ListInstanceProfiles",
-  #               "iam:GetInstanceProfile",
-  #               "ssm:ListTagsForResource",
-  #               "iam:RemoveRoleFromInstanceProfile",
-  #               "iam:DeleteInstanceProfile",
-  #               "iam:AddRoleToInstanceProfile",
-  #               "iam:PassRole",
-  #               "iam:PutRolePolicy",
-  #               "iam:GetRolePolicy",
-  #               "iam:ListRolePolicies",
-  #               "iam:DeleteRolePolicy",
-  #               "ssm:DeleteParameter"
-
-
 resource "aws_key_pair" "this" {
   key_name   = var.prefix
   public_key = file(var.ssh_public_key_path)
@@ -62,7 +34,7 @@ EOF
 }
 
 resource "aws_iam_role_policy" "put_parameters" {
-    name = "get_parameters"
+    name = "put_parameters"
     role = aws_iam_role.put_parameters.name
     policy = <<EOF
 {
@@ -72,7 +44,8 @@ resource "aws_iam_role_policy" "put_parameters" {
             "Effect": "Allow",
             "Action": [
                 "ssm:GetParameters",
-                "ssm:PutParameters"
+                "ssm:PutParameters",
+                "ssm:PutParameter"
             ],
             "Resource": [
                 "${aws_ssm_parameter.k3s_token.arn}"
@@ -107,24 +80,12 @@ resource "aws_instance" "master" {
 
 }
 
-data "external" "join_cmd" {
-  # count   = "${var.enabled == "true" ? 1 : 0}"
-  program = ["python", "../config/get_k3s_token.py"]
-
-  query = {
-    host = aws_instance.master.public_ip
-    ssh_private_key_path = "~/.ssh/k3s-course"
-  }
-  depends_on = [aws_instance.master]
-}
-
-
 data "template_file" "node" {
   template = file("../config/node.sh")
 
   vars = {
     MASTER_PRIVATE_IPV4 = aws_instance.master.private_ip
-    K3S_TOKEN = data.external.join_cmd.result.cmd
+    REGION = var.region
   }
 }
 
