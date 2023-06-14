@@ -50,6 +50,9 @@ helm repo add nginx https://kubernetes.github.io/ingress-nginx
 helm repo update nginx
 helm install nginx nginx/ingress-nginx --set controller.service.nodePorts.http=30111
 
+kubectl create deployment k3scourse --image=ghcr.io/benc-uk/python-demoapp:latest --replicas=1 --port 5000
+kubectl expose deployment k3scourse --port=8080 --target-port=5000 # --type NodePort
+
 # TODO: wait until Nginx Ingress Controller available
 export cc=0
 export maxx=60
@@ -64,9 +67,6 @@ until [[ "$(kubectl get deployments.apps nginx-ingress-nginx-controller -o jsonp
   fi
   sleep 5
 done
-
-kubectl create deployment k3scourse --image=ghcr.io/benc-uk/python-demoapp:latest --replicas=1 --port 5000
-kubectl expose deployment k3scourse --port=8080 --target-port=5000 # --type NodePort
 
 # Creating Ingress for a demo app
 kubectl apply -f - <<EOF
