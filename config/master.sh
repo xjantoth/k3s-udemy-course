@@ -2,10 +2,11 @@
 
 # sudo cat /var/lib/cloud/instance/scripts/part-001
 # cat /var/log/cloud-init-output.log
+# https://austindewey.com/2020/10/16/configure-ec2-the-cloud-native-way-using-aws-parameter-store/
 
 set -ex
 
-echo "K3S Mster: Hello User Data from Terraform" > /opt/user_data.txt
+echo "K3S Master: Hello User Data from Terraform" > /opt/user_data.txt
 
 
 curl -sfL https://get.k3s.io | sh -s - --write-kubeconfig-mode 644 --tls-san $(curl ifconfig.me) --disable servicelb --disable traefik

@@ -76,41 +76,6 @@ Open "Google Authenticator App", hit Plus sign and scan QR code.
 You are all set when it comes to so called "root AWS account user"
 ![AWS Free Tier Account](img/tier-16.png) 
 
-Create a new IAM user "k3s-course-tf"
-![AWS Free Tier Account](img/tier-17.png) 
-
-Create "admisnistrators" group and grant "AdministratorAccess" privileges.
-![AWS Free Tier Account](img/tier-18.png) 
-
-Add "k3s-course-tf" IAM user to "admisnistrators" group.
-![AWS Free Tier Account](img/tier-19.png) 
-
-![AWS Free Tier Account](img/tier-20.png) 
-
-Setup MFA for "k3s-course-tf" IAM user in the same way as it has been already done for "root AWS account".
-![AWS Free Tier Account](img/tier-21.png) 
-
-Select MFA device. I would recommend to download "Google Authenticator App" to your cell phone.
-![AWS Free Tier Account](img/tier-22.png) 
-
-Open "Google Authenticator App", hit Plus sign and scan QR code.
-![AWS Free Tier Account](img/tier-23.png)
-
-Generate "Access keys"
-![AWS Free Tier Account](img/tier-24.png) 
-
-Generate "Access keys"
-![AWS Free Tier Account](img/tier-25.png) 
-
-![AWS Free Tier Account](img/tier-26.png) 
-
-Store credentials.
-![AWS Free Tier Account](img/tier-27.png) 
-
-![AWS Free Tier Account](img/tier-28.png) 
-![AWS Free Tier Account](img/tier-29.png) 
-![AWS Free Tier Account](img/tier-30.png) 
-
 
 
 ### Provision EC2 instance in AWS
