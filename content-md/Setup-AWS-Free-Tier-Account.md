@@ -2,7 +2,7 @@
 
 Google "How to create Free Tier AWS account" and use some email address. I would advise to create an email address dedicated for this course.
 
-![AWS Free Tier Account](img/tier-1.png) 
+![AWS Free Tier Account](../img/tier-1.png) 
 
 Verification code will be sent to the respective mailbox once email address was written to a "Sign up for AWS" page
 ![AWS Free Tier Account](img/tier-2.png)
