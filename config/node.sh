@@ -3,7 +3,7 @@
 # sudo cat /var/lib/cloud/instance/scripts/part-001
 # cat /var/log/cloud-init-output.log
 
-set -ex
+# set -ex
 
 echo "K3S Node: Hello User Data from Terraform" > /opt/user_data.txt
 
@@ -32,7 +32,8 @@ retries=30
 until [[ "$(aws ssm get-parameters --names k3s_token --query 'Parameters[0].Value' --output text --region ${REGION})" != "empty" ]]; do
   ((count++))
   if [[ $count -ge $retries ]]; then
-    exit 1
+    echo "Could not get a proper K3S token"
+    exit 0
   fi
   sleep 10
 done
