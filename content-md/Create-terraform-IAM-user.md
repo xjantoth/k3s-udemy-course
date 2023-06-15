@@ -1,6 +1,5 @@
 ### Create terraform IAM user
 
-```bash
 Create a new IAM user with MFA and `AccessAdministration` privileges
 ![Create terraform IAM usr](img/tf-user-1.png) 
 ![Create terraform IAM usr](img/tf-user-2.png) 
@@ -14,4 +13,3 @@ Create a new IAM user with MFA and `AccessAdministration` privileges
 ![Create terraform IAM usr](img/tf-user-10.png) 
 ![Create terraform IAM usr](img/tf-user-11.png) 
 
-```
