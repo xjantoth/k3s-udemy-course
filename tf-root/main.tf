@@ -14,12 +14,10 @@ variable "s3_bucket_name" {
 }
 
 # ---------------------------------------------------------------------------------------
+# k3s-restrictive-no-mfa cli
+# ---------------------------------------------------------------------------------------
 resource "aws_iam_user" "k3s_restrictive" {
   name = var.k3s_restrictive_no_mfa
-}
-
-resource "aws_iam_user" "k3s_ui_cli_admin_mfa" {
-  name = var.k3s_admin
 }
 
 resource "aws_iam_policy" "restrictive" {
@@ -33,6 +31,12 @@ resource "aws_iam_user_policy_attachment" "example_attachment" {
   policy_arn = aws_iam_policy.restrictive.arn
 }
 
+# ---------------------------------------------------------------------------------------
+# k3s-admin Web UI
+# ---------------------------------------------------------------------------------------
+resource "aws_iam_user" "k3s_ui_cli_admin_mfa" {
+  name = var.k3s_admin
+}
 
 resource "aws_iam_policy" "mfa" {
   name        = "k3s-admin-ui-cli-with-mfa"
