@@ -46,6 +46,11 @@ data "aws_iam_policy_document" "restrictive" {
       "ec2:StopInstances",
       "ec2:TerminateInstances"
     ]
+   condition {
+      test     = "StringEquals"
+      variable = "ec2:InstanceType"
+      values   = ["t2.micro", "t3.micro", "t3a.medium"]
+    }
   }
 
   statement {
