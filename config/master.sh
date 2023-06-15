@@ -4,7 +4,7 @@
 # cat /var/log/cloud-init-output.log
 # https://austindewey.com/2020/10/16/configure-ec2-the-cloud-native-way-using-aws-parameter-store/
 
-set -ex
+# set -ex
 
 echo "K3S Master: Hello User Data from Terraform" > /opt/user_data.txt
 
