@@ -23,3 +23,10 @@ Default region name [None]: us-east-1
 Default output format [None]:
 ```
 ![restrictive-terraform-user](../img/rest-5.png) 
+
+
+Check configuration files used by `aws` binary:
+- `~/.aws/config`
+- `~/.aws/credentials`
+
+![restrictive-terraform-user](../img/rest-6.png) 
