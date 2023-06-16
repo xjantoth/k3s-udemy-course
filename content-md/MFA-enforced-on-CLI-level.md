@@ -63,22 +63,64 @@ Finally, review `k3s-admin` IAM user. It should have by now two permissions poli
 
 #### Test whether MFA is enforced at both Web UI and CLI level
 
+
+Generate `Access keys` for `k3s-admin` IAM user first.
+
+![Create AWS policy to restrict cli  IAM usr](../img/mfa-5.png)
+![Create AWS policy to restrict cli  IAM usr](../img/mfa-6.png)
+![Create AWS policy to restrict cli  IAM usr](../img/mfa-7.png)
+
+Setup aws cli locally (create a new AWS PROFILE)
+
 ```bash
+aws configure --profile k3s-admin
+```
+
+![Create AWS policy to restrict cli  IAM usr](../img/mfa-8.png)
+
+
+```bash
+unset $(echo $(env | grep AWS | cut -d"=" -f1))
+
 TOKEN_CODE="576353"
+
+AWS_ACCOUNT_ID="363711084474"
+PROFILE="k3s-admin"
+IAM_USER="k3s-admin"
+
 token_output=$(aws sts get-session-token \
---serial-number arn:aws:iam::363711084474:mfa/k3s-course-tf \
+--serial-number arn:aws:iam::${AWS_ACCOUNT_ID}:mfa/${IAM_USER} \
 --token-code ${TOKEN_CODE} \
---profile k3s-course)
+--profile ${PROFILE})
 
 # Extract the temporary credentials from the command output
 export AWS_ACCESS_KEY_ID=$(echo $token_output | jq -r '.Credentials.AccessKeyId')
 export AWS_SECRET_ACCESS_KEY=$(echo $token_output | jq -r '.Credentials.SecretAccessKey')
 export AWS_SESSION_TOKEN=$(echo $token_output | jq -r '.Credentials.SessionToken')
 
-export AWS_DEFAULT_PROFILE
 # verify that 
 env | grep AWS
+```
 
-cd terraform/
+```bash
+
+mkdir -p test-mfa
+
+cat <<EOF > test-mfa/file.txt
+provider "aws" {
+  region = "us-east-1"
+}
+
+resource "aws_instance" "example" {
+  ami           = "ami-0c94855ba95c71c99"
+  instance_type = "t2.micro"
+
+  tags = {
+    Name = "ExampleInstance"
+  }
+}
+EOF
+
+cd test-mfa
 terraform init
 ```
