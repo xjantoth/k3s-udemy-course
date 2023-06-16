@@ -4,19 +4,19 @@ resource "aws_key_pair" "this" {
 }
 
 resource "aws_ssm_parameter" "k3s_token" {
-    name = "k3s_token"
-    value = "empty"
-    type = "String"
+  name  = "k3s_token"
+  value = "empty"
+  type  = "String"
 
-    lifecycle {
-      ignore_changes = [value]
-    }
+  lifecycle {
+    ignore_changes = [value]
+  }
 }
 
 resource "aws_iam_role" "put_parameters" {
-    name = "put_parameters"
-    description = "Role to permit ec2 to put parameters from Parameter Store"
-    assume_role_policy = <<EOF
+  name               = "put_parameters"
+  description        = "Role to permit ec2 to put parameters from Parameter Store"
+  assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -34,9 +34,9 @@ EOF
 }
 
 resource "aws_iam_role_policy" "put_parameters" {
-    name = "put_parameters"
-    role = aws_iam_role.put_parameters.name
-    policy = <<EOF
+  name   = "put_parameters"
+  role   = aws_iam_role.put_parameters.name
+  policy = <<EOF
 {
     "Version": "2012-10-17",
     "Statement": [
@@ -51,15 +51,15 @@ resource "aws_iam_role_policy" "put_parameters" {
                 "${aws_ssm_parameter.k3s_token.arn}"
             ]
         }
-        
+
     ]
 }
 EOF
 }
 
 resource "aws_iam_instance_profile" "k3s_master" {
-    name = "k3s_master"
-    role = aws_iam_role.put_parameters.name
+  name = "k3s_master"
+  role = aws_iam_role.put_parameters.name
 }
 
 resource "aws_instance" "master" {
@@ -67,7 +67,7 @@ resource "aws_instance" "master" {
   instance_type = var.instance_type
 
   vpc_security_group_ids = [aws_security_group.this.id]
-  key_name        = aws_key_pair.this.key_name
+  key_name               = aws_key_pair.this.key_name
 
   # Notice that User Data Shell script will be copied:
   # /bin/bash /var/lib/cloud/instance/scripts/part-001
@@ -85,15 +85,15 @@ data "template_file" "node" {
 
   vars = {
     MASTER_PRIVATE_IPV4 = aws_instance.master.private_ip
-    REGION = var.region
+    REGION              = var.region
   }
 }
 
 # K3S Node section
 resource "aws_iam_role" "get_parameters" {
-    name = "get_parameters"
-    description = "Role to permit ec2 to get parameters from Parameter Store"
-    assume_role_policy = <<EOF
+  name               = "get_parameters"
+  description        = "Role to permit ec2 to get parameters from Parameter Store"
+  assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -111,9 +111,9 @@ EOF
 }
 
 resource "aws_iam_role_policy" "get_parameters" {
-    name = "get_parameters"
-    role = aws_iam_role.get_parameters.name
-    policy = <<EOF
+  name   = "get_parameters"
+  role   = aws_iam_role.get_parameters.name
+  policy = <<EOF
 {
     "Version": "2012-10-17",
     "Statement": [
@@ -132,8 +132,8 @@ EOF
 }
 
 resource "aws_iam_instance_profile" "k3s_node" {
-    name = "get_parameters"
-    role = aws_iam_role.get_parameters.name
+  name = "get_parameters"
+  role = aws_iam_role.get_parameters.name
 }
 
 resource "aws_instance" "node" {
@@ -141,7 +141,7 @@ resource "aws_instance" "node" {
   instance_type = var.instance_type
 
   vpc_security_group_ids = [aws_security_group.this.id]
-  key_name        = aws_key_pair.this.key_name
+  key_name               = aws_key_pair.this.key_name
 
   # Notice that User Data Shell script will be copied:
   # /bin/bash /var/lib/cloud/instance/scripts/part-001
@@ -165,4 +165,3 @@ output "ssh_command_node" {
   value       = "ssh -i ~/.ssh/k3s-course ubuntu@${aws_instance.node.public_ip}"
   # sensitive = true
 }
-

@@ -53,4 +53,3 @@ resource "aws_iam_user_policy_attachment" "admin_attachment" {
   user       = aws_iam_user.k3s_ui_cli_admin_mfa.name
   policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
 }
-

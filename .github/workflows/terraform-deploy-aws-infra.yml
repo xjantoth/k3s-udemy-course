@@ -1,5 +1,5 @@
 # apply code
-name: K3S course Terraform Plan/Apply 
+name: K3S course Terraform Plan/Apply
 
 on:
   workflow_dispatch:
@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ENVIRONMENT_NAME: dev
-  
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2

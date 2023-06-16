@@ -1,5 +1,5 @@
 # exclude from .gitignore
-ami_image             = "ami-0efd657a42099f98f" # Ubuntu 20.04
+ami_image = "ami-0efd657a42099f98f" # Ubuntu 20.04
 # instance_type         = "t3.micro"
 instance_type         = "t3a.medium"
 ssh_public_key_path   = "k3s-course.pub"

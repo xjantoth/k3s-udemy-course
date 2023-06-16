@@ -2,7 +2,7 @@
 
 
 Setup new directly attached AWS policy to a user `k3s-admin`.
-Copy following policy to 
+Copy following policy to
 
 Navigate to `IAM` section and find `k3s-admin` IAM user in AWS web console. Hit `Permissions` -> `Add permissions` -> `Create inline policy`.
 ![Create AWS policy to restrict cli with MFA](../img/mfa-1.png)

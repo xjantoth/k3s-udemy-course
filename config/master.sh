@@ -87,4 +87,3 @@ spec:
                 port:
                   number: 8080
 EOF
-

@@ -12,7 +12,7 @@ apt install awscli -y
 
 #curl -sfL https://get.k3s.io | sh -s - --write-kubeconfig-mode 644 --tls-san $(curl ifconfig.me)
 # TODO
-# 
+#
 c=0
 max=60
 
@@ -38,7 +38,7 @@ until [[ "$(aws ssm get-parameters --names k3s_token --query 'Parameters[0].Valu
   sleep 10
 done
 
-export K3S_TOKEN_SSM="$(aws ssm get-parameters --names k3s_token --query 'Parameters[0].Value' --output text --region ${REGION})" 
+export K3S_TOKEN_SSM="$(aws ssm get-parameters --names k3s_token --query 'Parameters[0].Value' --output text --region ${REGION})"
 curl -sfL https://get.k3s.io | K3S_URL=https://${MASTER_PRIVATE_IPV4}:6443 K3S_TOKEN=$K3S_TOKEN_SSM sh -
 
 
@@ -57,4 +57,3 @@ curl -sfL https://get.k3s.io | K3S_URL=https://${MASTER_PRIVATE_IPV4}:6443 K3S_T
 # echo 'alias k=kubectl' >>/home/ubuntu/.bashrc
 # echo 'complete -F __start_kubectl k' >>/home/ubuntu/.bashrc
 # source ~/.bashrc
-

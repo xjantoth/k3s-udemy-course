@@ -23,10 +23,10 @@ resource "aws_security_group" "this" {
   ingress {
     from_port   = 0
     to_port     = 0
-    protocol    = "-1"  # or "udp" or "icmp" depending on the desired protocol
+    protocol    = "-1" # or "udp" or "icmp" depending on the desired protocol
     description = "Allow inter-VPC traffic"
     #security_groups = [aws_security_group.destination.id]  # Security group in the destination VPC
-    self      = true
+    self = true
   }
 
   egress {

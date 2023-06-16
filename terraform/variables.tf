@@ -18,11 +18,6 @@ variable "prefix" {
   type        = string
 }
 
-variable "user_data_script_path" {
-  description = "Local path to user_data script  e.g. config/initial.sh"
-  type        = string
-}
-
 variable "allowed_ports" {
   description = "Allowed TCP ports e.g. [...]"
   type        = list(number)

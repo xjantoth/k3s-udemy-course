@@ -3,7 +3,7 @@ data "aws_iam_policy_document" "restrictive" {
     sid       = "AllowEC2Operations"
     effect    = "Allow"
     resources = ["*"]
-    actions   = [
+    actions = [
       "ec2:AuthorizeSecurityGroupEgress",
       "ec2:AuthorizeSecurityGroupIngress",
       "ec2:CreateKeyPair",
@@ -46,7 +46,7 @@ data "aws_iam_policy_document" "restrictive" {
       "ec2:StopInstances",
       "ec2:TerminateInstances"
     ]
-   condition {
+    condition {
       test     = "StringEquals"
       variable = "ec2:InstanceType"
       values   = ["t2.micro", "t3.micro", "t3a.medium"]
@@ -57,7 +57,7 @@ data "aws_iam_policy_document" "restrictive" {
     sid       = "AllowIAM"
     effect    = "Allow"
     resources = ["*"]
-    actions   = [
+    actions = [
       "iam:AddRoleToInstanceProfile",
       "iam:CreateInstanceProfile",
       "iam:CreateRole",
@@ -83,7 +83,7 @@ data "aws_iam_policy_document" "restrictive" {
     sid       = "AllowSSM"
     effect    = "Allow"
     resources = ["*"]
-    actions   = [
+    actions = [
       "ssm:AddTagsToResource",
       "ssm:DeleteParameter",
       "ssm:DescribeParameters",
@@ -99,7 +99,7 @@ data "aws_iam_policy_document" "restrictive" {
     sid       = "AllowBucketListing"
     effect    = "Allow"
     resources = ["arn:aws:s3:::${var.s3_bucket_name}"]
-    actions   = [
+    actions = [
       "s3:ListBucket",
       "s3:GetBucketLocation",
     ]
@@ -109,7 +109,7 @@ data "aws_iam_policy_document" "restrictive" {
     sid       = "AllowObjectOperations"
     effect    = "Allow"
     resources = ["arn:aws:s3:::${var.s3_bucket_name}/*"]
-    actions   = [
+    actions = [
       "s3:PutObject",
       "s3:GetObject",
       "s3:DeleteObject",
@@ -117,4 +117,3 @@ data "aws_iam_policy_document" "restrictive" {
     ]
   }
 }
-

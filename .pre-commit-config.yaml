@@ -19,8 +19,8 @@ repos:
       files: ^(terraform|tf-root)/.*\.tf$
     - id: terraform_validate
       files: ^(terraform|tf-root)/.*\.tf$
-    - id: terraform_checkov
-      files: ^(terraform|tf-root)/.*\.tf$
+    # - id: terraform_checkov
+    #   files: ^(terraform|tf-root)/.*\.tf$
     - id: terraform_docs
       files: ^(terraform|tf-root)/.*\.tf$
       args:

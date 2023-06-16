@@ -1,5 +1,5 @@
 # destroy code
-name: K3S course - Terraform Destroy 
+name: K3S course - Terraform Destroy
 
 on:
   workflow_dispatch:
@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ENVIRONMENT_NAME: dev
-  
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2

@@ -6,7 +6,7 @@ https://github.com/xjantoth/k3s-udemy-course
 ### !!! DISCLAIMER
 
 Make sure to **DELETE ALL YOUR AWS RESOURCES** (ec2, s3, ssm, ...) when not used.
-Avoid any unexpected charges simply because of forgotten EC2, EBS or any other resources. 
+Avoid any unexpected charges simply because of forgotten EC2, EBS or any other resources.
 
 ### Prerequisites
 
@@ -41,5 +41,3 @@ Note: 3 AWS regions are supported out of a box for AWS Free tier account (Virgin
 1. [Writing terraform code for 2 AWS EC2 instances](content-md/Writing-terraform-code-for-2-AWS-EC2-instances.md)
 1. [Github action CICD pipeline to run Terraform](content-md/Github-action-CICD-pipeline-to-run-Terraform.md)
 1. [Testing a first deployment via kubectl](content-md/Testing-a-first-deployment-via-kubectl.md)
-
-
