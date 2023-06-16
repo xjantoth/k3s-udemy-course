@@ -1,5 +1,16 @@
 ### Create terraform IAM user
 
+Create a new use AWS IAM `k3s-restrictive-no-mfa` and hit `Next` button.
+
+![restrictive-terraform-user](../img/rest_1.png)
+
+
+Hit `Next`.
+![restrictive-terraform-user](../img/rest_2.png) 
+
+Finally, `Create user`.
+![restrictive-terraform-user](../img/rest_3.png) 
+
 Navigate to `Security Credentials` section under `k3s-restrictive-no-mfa` IAM user and click to create new `Access key`. Choose `Command Line Interface` and checkbox at the bottom. Finally click `Next`.
 ![restrictive-terraform-user](../img/rest-1.png) 
 
