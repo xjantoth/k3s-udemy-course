@@ -128,6 +128,19 @@ aws_instance.example: Creating...
 
 ```
 
+Decode message by using even stronger credentials (root).
+
+```bash
+export AWS_DEFAULT_PROFILE=k3s-root
+
+[arch:jantoth ] aws sts decode-authorization-message --encoded-message fnWGjUOFSHpsg4YQUytxJHcHOKuProzqIzsuYPfIDS5QRL6q32MhqLWCJ_x5jjiZ5U8_6nYku1vXtHmsIcrnhqPSmZg6FSNVqgbSG0Q2_DGtUkHSw6MQ1wMYCyWEB-MAdKBsf1J9CFXGGAIe1fTJC-uQMSkyzokJlQQOo6HntRl_TiSvRxC4krNqGKb59yqBuhFjY8wZONKa36yBtDq_x_mZMlZAh5-fgMynvBIoaNoTiGAFM9dvTWVg4bawib1T7keJvUqzpQATVDfnG40fNykU7YRTQOO3NMpTr6KpwM5tpAJASjryqV2co8B_wvNCubF4BhVpUa5ZCtRv7rPqJSjN7Y6CfFI0znq5DV0Eploesix_X5Q1ARzlvvqE31rza0ZCnc7j-NFtDoKzfW-rSQdi2idsxUcDmT9EaVKFUibxHBwpT7j7pThE38yAUzVqwgjk0af-hINgaW6rrmxjMKs5PFIiwlFvwVYwIgEAWQ3PMpQQvGdVn1hrSmBZU_KbEI0QML1IE6txXhkqEBUmBDpzhtTj34o7iHKXVeUt8TD7vcGYHcZSGuvV3CjnAI2z0C1h9S7yYndHdEsmHeOaA4rcx_xwR7RInhg_q10DOp3bRh1YiaLnnxm7EZFTZ_msPYLbYanwR1KD6SQJNC1zOYVWPFfdimQnQG9TsbNfvi2xn4EsejhGkJOqEFO2TDN4Ckv9CBwpUmOIOU6MkX-EdN72L4XGFkefKQetrlsTjUM9GPTzLopvgh_-9y_DlxZ2CLmDgI9M4cK7gnTF8KvPUXCNKyXL4Lrne4lrFIAg5Og6vnVtEvRgM9q-1idGhVLCOmNUQ6DKSmxylYHePQcYKIVJmsdMn0i4kzTRFK1MUQZvzbYWuZqmKyjR6C6nNi1hvx1Wq37NRk_-tNiRySXppgsiccOifeTRp25Zvmld41bSVaQT8mh4628A13-7Vg
+{
+    "DecodedMessage": "{\"allowed\":false,\"explicitDeny\":true,\"matchedStatements\":{\"items\":[{\"statementId\":\"MustBeSignedInWithMFA\",\"effect\":\"DENY\",\"principals\":{\"items\":[{\"value\":\"AIDAVJLW6W65F7NXLEPGQ\"}]},\"principalGroups\":{\"items\":[]},\"actions\":{\"items\":[{\"value\":\"sts:GetSessionToken\"},{\"value\":\"iam:ResyncMFADevice\"},{\"value\":\"iam:ListVirtualMFADevices\"},{\"value\":\"iam:ListUsers\"},{\"value\":\"iam:ListServiceSpecificCredentials\"},{\"value\":\"iam:ListSSHPublicKeys\"},{\"value\":\"iam:ListMFADevices\"},{\"value\":\"iam:ListAccountAliases\"},{\"value\":\"iam:ListAccessKeys\"},{\"value\":\"iam:GetAccountSummary\"},{\"value\":\"iam:EnableMFADevice\"},{\"value\":\"iam:DeleteVirtualMFADevice\"},{\"value\":\"iam:CreateVirtualMFADevice\"}]},\"resources\":{\"items\":[{\"value\":\"*\"}]},\"conditions\":{\"items\":[{\"key\":\"aws:MultiFactorAuthPresent\",\"values\":{\"items\":[{\"value\":\"false\"}]}}]}}]},\"failures\":{\"items\":[]},\"context\":{\"principal\":{\"id\":\"AIDAVJLW6W65F7NXLEPGQ\",\"name\":\"k3s-admin\",\"arn\":\"arn:aws:iam::363711084474:user/k3s-admin\"},\"action\":\"ec2:RunInstances\",\"resource\":\"arn:aws:ec2:us-east-1:363711084474:instance/*\",\"conditions\":{\"items\":[{\"key\":\"ec2:InstanceMarketType\",\"values\":{\"items\":[{\"value\":\"on-demand\"}]}},{\"key\":\"aws:Resource\",\"values\":{\"items\":[{\"value\":\"instance/*\"}]}},{\"key\":\"aws:Account\",\"values\":{\"items\":[{\"value\":\"363711084474\"}]}},{\"key\":\"ec2:AvailabilityZone\",\"values\":{\"items\":[{\"value\":\"us-east-1a\"}]}},{\"key\":\"ec2:ebsOptimized\",\"values\":{\"items\":[{\"value\":\"false\"}]}},{\"key\":\"ec2:IsLaunchTemplateResource\",\"values\":{\"items\":[{\"value\":\"false\"}]}},{\"key\":\"ec2:InstanceType\",\"values\":{\"items\":[{\"value\":\"t2.micro\"}]}},{\"key\":\"ec2:RootDeviceType\",\"values\":{\"items\":[{\"value\":\"ebs\"}]}},{\"key\":\"aws:Region\",\"values\":{\"items\":[{\"value\":\"us-east-1\"}]}},{\"key\":\"aws:Service\",\"values\":{\"items\":[{\"value\":\"ec2\"}]}},{\"key\":\"ec2:InstanceID\",\"values\":{\"items\":[{\"value\":\"*\"}]}},{\"key\":\"aws:Type\",\"values\":{\"items\":[{\"value\":\"instance\"}]}},{\"key\":\"ec2:Tenancy\",\"values\":{\"items\":[{\"value\":\"default\"}]}},{\"key\":\"ec2:Region\",\"values\":{\"items\":[{\"value\":\"us-east-1\"}]}},{\"key\":\"aws:ARN\",\"values\":{\"items\":[{\"value\":\"arn:aws:ec2:us-east-1:363711084474:instance/*\"}]}}]}}}"
+}
+
+```
+
+
 Despite the fact that the AWS profile that uses IAM user `k3s-admin` (who has got `AdministrationAccess policy`) enforces MFA at CLI level as well. That's why it's important to somehow use MFA code from a phone `Authenicator app`.
 
 #### Solution
