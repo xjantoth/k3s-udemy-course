@@ -13,15 +13,15 @@ repos:
     rev: v1.76.0
     hooks:
     - id: terraform_fmt
-      files: ^/\(terraform|tf-root\)/.*\.tf$
+      files: ^(terraform|tf-root)/.*\.tf$
     - id: terraform_tflint
-      files: ^/(terraform|tf-root)/.*\.tf$
+      files: ^(terraform|tf-root)/.*\.tf$
     - id: terraform_validate
-      files: ^/(terraform|tf-root)/.*\.tf$
+      files: ^(terraform|tf-root)/.*\.tf$
     - id: terraform_checkov
-      files: ^/(terraform|tf-root)/.*\.tf$
+      files: ^(terraform|tf-root)/.*\.tf$
     - id: terraform_docs
-      files: ^/(terraform|tf-root)/.*\.tf$
+      files: ^(terraform|tf-root)/.*\.tf$
       args:
         - '--args=--config=.terraform-docs.yml'
 
