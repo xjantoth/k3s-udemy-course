@@ -4,28 +4,74 @@ data "aws_iam_policy_document" "restrictive" {
     effect    = "Allow"
     resources = ["*"]
     actions = [
-      "ec2:AuthorizeSecurityGroupEgress",
-      "ec2:AuthorizeSecurityGroupIngress",
-      "ec2:CreateKeyPair",
-      "ec2:CreateSecurityGroup",
       "ec2:CreateTags",
-      "ec2:DeleteKeyPair",
       "ec2:DeleteNetworkInterface",
-      "ec2:DeleteSecurityGroup",
       "ec2:DescribeAvailabilityZones",
+      "ec2:DescribeInternetGateways",
+      "ec2:DescribeLaunchTemplates",
+      "ec2:DescribeNetworkInterfaces",
+      "ec2:DescribeRouteTables",
+      "ec2:DescribeSubnets",
+      "ec2:DescribeTags",
+      "ec2:DescribeVolumes"
+    ]
+  }
+
+  statement {
+    sid       = "AllowInstanceOperations"
+    effect    = "Allow"
+    resources = ["*"]
+    actions = [
       "ec2:DescribeInstanceAttribute",
       "ec2:DescribeInstanceCreditSpecifications",
       "ec2:DescribeInstanceTypes",
       "ec2:DescribeInstances",
-      "ec2:DescribeInternetGateways",
+      "ec2:ModifyInstanceAttribute",
+      "ec2:RunInstances",
+      "ec2:StartInstances",
+      "ec2:StopInstances",
+      "ec2:TerminateInstances"
+
+    ]
+    condition {
+      test     = "StringEquals"
+      variable = "ec2:InstanceType"
+      values   = ["t2.micro", "t3.micro", "t3a.medium"]
+    }
+  }
+
+  statement {
+    sid       = "AllowKeyPairOperations"
+    effect    = "Allow"
+    resources = ["*"]
+    actions = [
+      "ec2:CreateKeyPair",
+      "ec2:DeleteKeyPair",
       "ec2:DescribeKeyPairs",
-      "ec2:DescribeLaunchTemplates",
-      "ec2:DescribeNetworkInterfaces",
-      "ec2:DescribeRouteTables",
+      "ec2:ImportKeyPair"
+
+    ]
+  }
+
+  statement {
+    sid       = "AllowSecurityGroupsOperations"
+    effect    = "Allow"
+    resources = ["*"]
+    actions = [
+      "ec2:AuthorizeSecurityGroupEgress",
+      "ec2:AuthorizeSecurityGroupIngress",
+      "ec2:CreateSecurityGroup",
+      "ec2:DeleteSecurityGroup",
       "ec2:DescribeSecurityGroups",
-      "ec2:DescribeSubnets",
-      "ec2:DescribeTags",
-      "ec2:DescribeVolumes",
+      "ec2:RevokeSecurityGroupEgress",
+      "ec2:RevokeSecurityGroupIngress"
+    ]
+  }
+  statement {
+    sid       = "AllowEC2VpcOperations"
+    effect    = "Allow"
+    resources = ["*"]
+    actions = [
       "ec2:DescribeVpcAttribute",
       "ec2:DescribeVpcClassicLink",
       "ec2:DescribeVpcClassicLinkDnsSupport",
@@ -36,21 +82,8 @@ data "aws_iam_policy_document" "restrictive" {
       "ec2:DescribeVpcEndpointServices",
       "ec2:DescribeVpcEndpoints",
       "ec2:DescribeVpcPeeringConnections",
-      "ec2:DescribeVpcs",
-      "ec2:ImportKeyPair",
-      "ec2:ModifyInstanceAttribute",
-      "ec2:RevokeSecurityGroupEgress",
-      "ec2:RevokeSecurityGroupIngress",
-      "ec2:RunInstances",
-      "ec2:StartInstances",
-      "ec2:StopInstances",
-      "ec2:TerminateInstances"
+      "ec2:DescribeVpcs"
     ]
-    condition {
-      test     = "StringEquals"
-      variable = "ec2:InstanceType"
-      values   = ["t2.micro", "t3.micro", "t3a.medium"]
-    }
   }
 
   statement {
@@ -80,7 +113,7 @@ data "aws_iam_policy_document" "restrictive" {
     ]
   }
   statement {
-    sid       = "AllowSSM"
+    sid       = "AllowSSMOperations"
     effect    = "Allow"
     resources = ["*"]
     actions = [
