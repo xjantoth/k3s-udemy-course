@@ -25,7 +25,7 @@ terraform {
 
 ```
 
-The second codeblock is used to automatically create two IAM users `k3s-admin` and `k3s-restrictive-no-mfa`. These are our well known IAM users that have been created and configured manually. However, there is also an existing terraform code even for this actions that can be reused and it saves some time when setting up a completely new environment. Now, the only difference comparing to the first example is `key` keyword. Since, these would be two completely different codebases, the terraform states must be stored separately. This can be achieved by specifying a different logical path `tf-statefiles/tf-root/tf-root.tfstate`.
+The second codeblock is used to automatically create two IAM users `k3s-admin` and `k3s-restrictive-no-mfa` with their respective policies and permissions. These are our well known IAM users that have been created and configured manually. However, there is also an existing terraform codebase (that is a part of this repository [tf-root/](../tf-root/) ) even for this actions that can be reused and it saves some time when setting up a completely new environment. Now, the only difference comparing to the first example is `key` keyword. Since, these would be two completely different codebases, the terraform states must be stored separately. This can be achieved by specifying a different logical path `tf-statefiles/tf-root/tf-root.tfstate`.
 
 ```bash
 terraform {
