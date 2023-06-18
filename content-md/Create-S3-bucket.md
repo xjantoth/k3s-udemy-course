@@ -15,4 +15,6 @@ The Terraformstate is typically stored in a file, often named `terraform.tfstate
 We will need `S3 bucket to store terraform state`.
 
 
+Search for `S3` in AWS console. Then hit `Create bucket`. Assign globally unique name and choose `us-east-1` region. Enable `versioning` and finally create bucket.
+
 ![AWS Free Tier Account](../img/s3-1.png)
