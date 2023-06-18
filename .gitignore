@@ -35,4 +35,5 @@ override.tf.json
 .terraformrc
 terraform.rc
 terraform/.terraform.lock.hcl
+tf-root/.terraform.lock.hcl
 !terraform/terraform.tfvars
