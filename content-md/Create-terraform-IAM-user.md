@@ -41,3 +41,11 @@ Check configuration files used by `aws` binary:
 - `~/.aws/credentials`
 
 ![restrictive-terraform-user](../img/rest-6.png)
+
+
+Alternatively, `Access keys` can be created via `root` or whatever user's credentials from
+
+
+```bash
+aws iam create-access-key --user-name k3s-restrictive-no-mfa
+```

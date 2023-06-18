@@ -1,9 +1,36 @@
 data "aws_iam_policy_document" "restrictive" {
   statement {
+    sid       = "RunInstance"
+    effect    = "Allow"
+    resources = ["*"]
+    actions = [
+      "ec2:RunInstances",
+      "ec2:StartInstances",
+      "ec2:StopInstances",
+      "ec2:TerminateInstances"
+    ]
+
+    condition {
+      test     = "StringLikeIfExists"
+      variable = "ec2:InstanceType"
+
+      values = [
+        "t1.*",
+        "t2.*",
+        "t3a.medium",
+      ]
+    }
+  }
+
+  statement {
     sid       = "AllowEC2Operations"
     effect    = "Allow"
     resources = ["*"]
     actions = [
+      "ec2:DescribeImages",
+      "ec2:DescribeInstances",
+      "ec2:DescribeVpcs",
+      "ec2:DescribeSubnets",
       "ec2:CreateTags",
       "ec2:DeleteNetworkInterface",
       "ec2:DescribeAvailabilityZones",
@@ -11,34 +38,16 @@ data "aws_iam_policy_document" "restrictive" {
       "ec2:DescribeLaunchTemplates",
       "ec2:DescribeNetworkInterfaces",
       "ec2:DescribeRouteTables",
-      "ec2:DescribeSubnets",
       "ec2:DescribeTags",
-      "ec2:DescribeVolumes"
-    ]
-  }
-
-  statement {
-    sid       = "AllowInstanceOperations"
-    effect    = "Allow"
-    resources = ["*"]
-    actions = [
       "ec2:DescribeInstanceAttribute",
       "ec2:DescribeInstanceCreditSpecifications",
       "ec2:DescribeInstanceTypes",
-      "ec2:DescribeInstances",
       "ec2:ModifyInstanceAttribute",
-      "ec2:RunInstances",
-      "ec2:StartInstances",
-      "ec2:StopInstances",
-      "ec2:TerminateInstances"
-
+      "ec2:DescribeVolumes",
+      "ec2:DescribeVpcAttribute"
     ]
-    condition {
-      test     = "StringEquals"
-      variable = "ec2:InstanceType"
-      values   = ["t2.micro", "t3.micro", "t3a.medium"]
-    }
   }
+
 
   statement {
     sid       = "AllowKeyPairOperations"
@@ -65,24 +74,6 @@ data "aws_iam_policy_document" "restrictive" {
       "ec2:DescribeSecurityGroups",
       "ec2:RevokeSecurityGroupEgress",
       "ec2:RevokeSecurityGroupIngress"
-    ]
-  }
-  statement {
-    sid       = "AllowEC2VpcOperations"
-    effect    = "Allow"
-    resources = ["*"]
-    actions = [
-      "ec2:DescribeVpcAttribute",
-      "ec2:DescribeVpcClassicLink",
-      "ec2:DescribeVpcClassicLinkDnsSupport",
-      "ec2:DescribeVpcEndpointConnectionNotifications",
-      "ec2:DescribeVpcEndpointConnections",
-      "ec2:DescribeVpcEndpointServiceConfigurations",
-      "ec2:DescribeVpcEndpointServicePermissions",
-      "ec2:DescribeVpcEndpointServices",
-      "ec2:DescribeVpcEndpoints",
-      "ec2:DescribeVpcPeeringConnections",
-      "ec2:DescribeVpcs"
     ]
   }
 
