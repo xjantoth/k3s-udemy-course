@@ -56,7 +56,10 @@ env | grep AWS_DEFAULT_PROFILE
 
 #### Modify backend.tf file
 
-Type in your AWS S3 bucket name to [line 10 file backend.tf](https://github.com/xjantoth/k3s-udemy-course/blob/master/tf-root/backend.tf#L10).
+Type in your AWS S3 bucket name to:
+- [line 10 file tf-root/backend.tf](https://github.com/xjantoth/k3s-udemy-course/blob/master/tf-root/backend.tf#L10)
+- [line 13 file tf-root/main.tf](https://github.com/xjantoth/k3s-udemy-course/blob/master/tf-root/main.tf#L13)
+
 Remember that AWS S3 bucket name `k3scourse` is already taken by me :).
 
 Finally, IAM users can be created by Terraform.
