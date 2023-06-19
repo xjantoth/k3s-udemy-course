@@ -54,7 +54,7 @@ export AWS_DEFAULT_PROFILE=k3s-root
 env | grep AWS_DEFAULT_PROFILE
 ```
 
-#### Modify backend.tf file
+#### Modify tf-root/backend.tf and tf-root/main.tf files
 
 Type in your AWS S3 bucket name to:
 - [line 10 file tf-root/backend.tf](https://github.com/xjantoth/k3s-udemy-course/blob/master/tf-root/backend.tf#L10)
