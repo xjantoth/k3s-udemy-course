@@ -31,10 +31,10 @@ Note: 3 AWS regions are supported out of a box for AWS Free tier account (Virgin
 1. [Create Web UI admin IAM user](content-md/Create-Web-UI-admin-IAM-user.md)
 1. [MFA enforced on CLI level](content-md/MFA-enforced-on-CLI-level.md)
 1. [Create terraform IAM user](content-md/Create-terraform-IAM-user.md)
-
 1. [Create S3 bucket](content-md/Create-S3-bucket.md)
-
 1. [Setting up S3 as terraform backend](content-md/Setting-up-S3-as-terraform-backend.md)
+
+
 1. [Demonstrate creation of IAM users via Terraform](content-md/Demonstrate-creation-of-IAM-users-via-Terraform.md)
 
 1. [Writing terraform code for 2 AWS EC2 instances](content-md/Writing-terraform-code-for-2-AWS-EC2-instances.md)

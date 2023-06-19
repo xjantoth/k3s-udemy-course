@@ -26,7 +26,7 @@ resource "aws_iam_policy" "restrictive" {
   policy      = data.aws_iam_policy_document.restrictive.json
 }
 
-resource "aws_iam_user_policy_attachment" "example_attachment" {
+resource "aws_iam_user_policy_attachment" "restrictive" {
   user       = aws_iam_user.k3s_restrictive.name
   policy_arn = aws_iam_policy.restrictive.arn
 }
