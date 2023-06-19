@@ -689,3 +689,11 @@ aws_iam_policy.mfa: Destruction complete after 1s
 Destroy complete! Resources: 7 destroyed.
 
 ```
+
+
+#### MFA and Access Keys have to be created manually if needed.
+
+Now, the only thing that has not been taken care of by Terraform is creation of:
+- `Access Keys` for `k3s-restrictive-no-mfa` IAM user.
+- MFA device has to be assigned manually by clicking in Web UI.
+- DO NOT create `Access Keys` if not needed for `k3s-admin` IAM user.
