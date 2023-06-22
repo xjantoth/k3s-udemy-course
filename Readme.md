@@ -4,7 +4,7 @@
 https://github.com/xjantoth/k3s-udemy-course
 
 
-![restrictive-terraform-user](../img/infra-1-2d.png)
+![restrictive-terraform-user](img/infra-1-2d.png)
 
 ### !!! DISCLAIMER
 
