@@ -4,7 +4,7 @@
 https://github.com/xjantoth/k3s-udemy-course
 
 
-![restrictive-terraform-user](img/infra-1-2d.png)
+![restrictive-terraform-user](img/infra-1-3d.png)
 
 ### !!! DISCLAIMER
 
@@ -37,10 +37,9 @@ Note: 3 AWS regions are supported out of a box for AWS Free tier account (Virgin
 1. [Create S3 bucket](content-md/Create-S3-bucket.md)
 1. [Setting up S3 as terraform backend](content-md/Setting-up-S3-as-terraform-backend.md)
 1. [Demonstrate creation of IAM users via Terraform](content-md/Demonstrate-creation-of-IAM-users-via-Terraform.md)
-
-
 1. [Writing terraform infrastructure code for K3S cluster](content-md/Writing-terraform-infrastructure-code-for-K3S-cluster.md)
-)
+
+1. [Deploy AWS infrastructure via Terraform](content-md/Deploy-AWS-infrastructure-via-Terraform.md)
 
 1. [Github action CICD pipeline to run Terraform](content-md/Github-action-CICD-pipeline-to-run-Terraform.md)
 1. [Testing a first deployment via kubectl](content-md/Testing-a-first-deployment-via-kubectl.md)

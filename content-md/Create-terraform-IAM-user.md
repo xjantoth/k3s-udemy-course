@@ -85,21 +85,7 @@ and copy/paste following IAM policy to JSON section. Assign some policy name e.g
         {
             "Action": [
                 "ec2:ModifyInstanceAttribute",
-                "ec2:DescribeVpcs",
-                "ec2:DescribeVpcAttribute",
-                "ec2:DescribeVolumes",
-                "ec2:DescribeTags",
-                "ec2:DescribeSubnets",
-                "ec2:DescribeRouteTables",
-                "ec2:DescribeNetworkInterfaces",
-                "ec2:DescribeLaunchTemplates",
-                "ec2:DescribeInternetGateways",
-                "ec2:DescribeInstances",
-                "ec2:DescribeInstanceTypes",
-                "ec2:DescribeInstanceCreditSpecifications",
-                "ec2:DescribeInstanceAttribute",
-                "ec2:DescribeImages",
-                "ec2:DescribeAvailabilityZones",
+                "ec2:Describe*,
                 "ec2:DeleteNetworkInterface",
                 "ec2:CreateTags"
             ],

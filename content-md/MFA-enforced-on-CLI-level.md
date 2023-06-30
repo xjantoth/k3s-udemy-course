@@ -149,13 +149,13 @@ Despite the fact that the AWS profile that uses IAM user `k3s-admin` (who has go
 ```bash
 unset $(echo $(env | grep AWS | cut -d"=" -f1))
 
-TOKEN_CODE="183284"
+export TOKEN_CODE="183284"
 
-AWS_ACCOUNT_ID="363711084474"
-PROFILE="k3s-admin"
-IAM_USER="k3s-admin"
+exort AWS_ACCOUNT_ID="363711084474"
+exort PROFILE="k3s-admin"
+exort IAM_USER="k3s-admin"
 
-token_output=$(aws sts get-session-token \
+export token_output=$(aws sts get-session-token \
 --serial-number arn:aws:iam::${AWS_ACCOUNT_ID}:mfa/${IAM_USER} \
 --token-code ${TOKEN_CODE} \
 --profile ${PROFILE})
