@@ -72,8 +72,8 @@ and copy/paste following IAM policy to JSON section. Assign some policy name e.g
             "Condition": {
                 "StringLikeIfExists": {
                     "ec2:InstanceType": [
-                        "t1.*",
-                        "t2.*",
+                        "t2.micro",
+                        "t3.micro",
                         "t3a.medium"
                     ]
                 }
