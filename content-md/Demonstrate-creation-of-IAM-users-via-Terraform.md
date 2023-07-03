@@ -1,7 +1,6 @@
 ### Demonstrate creation of IAM users via Terraform
 
-This video will be about how to automate almost everything (by Terraform) what has been done manually so far in terms of
-crating two IAM users with their respective policies.
+The video will demonstrate how to automate tasks that were previously performed manually using Terraform. Specifically, it will focus on creating two IAM users and assigning them their respective policies.
 
 Recap:
 - k3s-admin (Access Keys (just for MFA demonstration), MFA enabled, `AdministrationAccess`, custom policy `k3s-admin-ui-cli-with-mfa`)
