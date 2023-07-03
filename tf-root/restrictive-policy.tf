@@ -15,8 +15,8 @@ data "aws_iam_policy_document" "restrictive" {
       variable = "ec2:InstanceType"
 
       values = [
-        "t1.*",
-        "t2.*",
+        "t3.micro",
+        "t2.micro",
         "t3a.medium",
       ]
     }
