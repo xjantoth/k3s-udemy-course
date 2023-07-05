@@ -163,3 +163,16 @@ k3scourse-974775499-nwqmf                         1/1     Running             0 
 k3scourse-974775499-kfs7b                         1/1     Running             0          3s
 
 ```
+
+
+
+#### Destroy your AWS infrastructure
+
+Destroy your infrastructure to avoid unneceassary expenxes
+
+```bash
+export AWS_DEFAULT_PROFILE=k3s-restrictive-no-mfa
+cd terraform/
+terraform destroy
+
+```
