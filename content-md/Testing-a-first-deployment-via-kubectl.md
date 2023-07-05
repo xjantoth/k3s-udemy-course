@@ -1,4 +1,4 @@
-### Testing a simple Kubernetes deployment via kubectl
+### Testing a simple Kubernetes deployment via kubectl and a bit of Helm
 
 
 ```bash

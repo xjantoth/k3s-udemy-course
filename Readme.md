@@ -41,5 +41,5 @@ Note: 3 AWS regions are supported out of a box for AWS Free tier account (Virgin
 
 1. [Deploy AWS infrastructure via Terraform](content-md/Deploy-AWS-infrastructure-via-Terraform.md)
 
-1. [Testing a first deployment via kubectl](content-md/Testing-a-first-deployment-via-kubectl.md)
+1. [Testing a first deployment via kubectl and a bit of Helm](content-md/Testing-a-first-deployment-via-kubectl.md)
 1. [Github action CICD pipeline to run Terraform](content-md/Github-action-CICD-pipeline-to-run-Terraform.md)
