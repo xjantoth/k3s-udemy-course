@@ -79,3 +79,33 @@ terraform validate
 terraform plan
 terraform apply
 ```
+
+
+#### Explore deployed AWS Infrastructure
+
+```bash
+export AWS_DEFAULT_PROFILE=k3s-restrictive-no-mfa
+env | grep AWS
+
+terraform state list
+terraform output
+...
+ssh_command_master = "ssh -i ~/.ssh/k3s-course ubuntu@3.92.203.125"
+ssh_command_node = "ssh -i ~/.ssh/k3s-course ubuntu@3.95.154.10"
+
+# Explore Kubernetes node/pods
+
+kubectl get nodes
+kubectl get pods -A
+
+
+# Master Kubernetes node
+aws ssm get-parameters --names k3s_token --query 'Parameters[0].Value' --output text --region us-east-1
+
+aws ssm put-parameter --name "k3s_token" \
+  --value "some-awesome-new-value" \
+  --type "String" --overwrite \
+  --region us-east-1
+
+curl http://169.254.169.254/latest/meta-data/iam/info
+```
