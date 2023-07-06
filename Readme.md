@@ -30,6 +30,7 @@ Note: 3 AWS regions are supported out of a box for AWS Free tier account (Virgin
 
 ### Table of Content
 
+1. [Introduction](content-md/Introduction.md)
 1. [Setup AWS Free Tier Account](content-md/Setup-AWS-Free-Tier-Account.md)
 1. [Create Web UI admin IAM user](content-md/Create-Web-UI-admin-IAM-user.md)
 1. [MFA enforced on CLI level](content-md/MFA-enforced-on-CLI-level.md)
@@ -43,3 +44,4 @@ Note: 3 AWS regions are supported out of a box for AWS Free tier account (Virgin
 
 1. [Testing a first deployment via kubectl and a bit of Helm](content-md/Testing-a-first-deployment-via-kubectl.md)
 1. [Github action CICD pipeline to run Terraform](content-md/Github-action-CICD-pipeline-to-run-Terraform.md)
+2. [Clean UP and AWS Billing](content-md/Clean-UP-and-AWS-Billing.md)
